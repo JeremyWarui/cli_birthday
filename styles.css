@@ -84,6 +84,24 @@ body::after {
   padding-bottom: 8px;
 }
 
+/* Hide scrollbar on desktop while preserving scroll behavior */
+@media (min-width: 641px) {
+  /* WebKit browsers */
+  #output-log::-webkit-scrollbar,
+  #app-container::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+  }
+
+  /* Firefox */
+  #output-log,
+  #app-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   #app-container {

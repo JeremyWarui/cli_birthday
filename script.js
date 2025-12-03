@@ -306,27 +306,34 @@ function showFinalMessage() {
     outputLog.appendChild(lineDiv);
   });
 
-  // HTML formatted celebratory message
-  finalMessageDiv.classList.remove("hidden");
-  finalMessageDiv.innerHTML = `
-        <h2 class="text-3xl font-bold mb-4 text-yellow-300">🎂🎉 HAPPY BIRTHDAY, ${name.toUpperCase()}!!! 🎉🎂</h2>
-        <p class="mb-3 text-lg">Today isn't just a normal day — it's the day the world got **one of its greatest gifts** 💖</p>
-        <p class="mb-4">I'm incredibly grateful for your friendship, your laughter, your support, and your madness 😄</p>
-        
-        <p class="text-xl font-semibold mt-6 mb-2 text-green-400">May this year bring you:</p>
-        <ul class="list-disc list-inside ml-4 text-left inline-block">
-            <li>Big wins and small beautiful moments ✨</li>
-            <li>Endless joy and unforgettable memories 💫</li>
-            <li>Peace that guards your heart 💕</li>
-            <li>And success that even surprises YOU 🚀</li>
-        </ul>
-        <p class="mt-8 text-xl font-bold">Today we celebrate **YOU** — loudly, joyfully, unapologetically 🥳</p>
-    `;
+  // Add spacing before the celebratory message
+  const spacer = document.createElement("div");
+  spacer.className = "typed-line";
+  spacer.innerHTML = "&nbsp;";
+  outputLog.appendChild(spacer);
+
+  // Render the celebratory message inside the terminal output
+  const celebrationDiv = document.createElement("div");
+  celebrationDiv.className = "typed-line text-center";
+  celebrationDiv.style.cssText = "background-color: rgba(0, 100, 0, 0.3); padding: 20px; border: 2px solid #0f0; border-radius: 8px; margin: 20px 0;";
+  celebrationDiv.innerHTML = `
+    <div style="color: #ffff00; font-size: 1.5rem; font-weight: bold; margin-bottom: 12px;">🎂🎉 HAPPY BIRTHDAY, ${name.toUpperCase()}!!! 🎉🎂</div>
+    <div style="color: #0ff; margin-bottom: 8px;">Today isn't just a normal day — it's the day the world got one of its greatest gifts 💖</div>
+    <div style="color: #0ff; margin-bottom: 12px;">I'm incredibly grateful for your friendship, your laughter, your support, and your madness 😄</div>
+    <div style="color: #0f0; font-weight: bold; margin-top: 16px; margin-bottom: 8px;">May this year bring you:</div>
+    <div style="color: #0ff; text-align: left; display: inline-block;">
+      • Big wins and small beautiful moments ✨<br>
+      • Endless joy and unforgettable memories 💫<br>
+      • Peace that guards your heart 💕<br>
+      • And success that even surprises YOU 🚀
+    </div>
+    <div style="color: #ffff00; font-weight: bold; margin-top: 16px; font-size: 1.2rem;">Today we celebrate YOU — loudly, joyfully, unapologetically 🥳</div>
+  `;
+  outputLog.appendChild(celebrationDiv);
   
-  // Scroll to bottom and ensure final message is visible
+  // Scroll to bottom to show the full message
   setTimeout(() => {
     scrollToBottom({ smooth: true });
-    finalMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, 100);
 }
 
