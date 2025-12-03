@@ -5,7 +5,6 @@ const TARGET_AGE = 27;
 
 const outputLog = document.getElementById("output-log");
 const inputArea = document.getElementById("input-area");
-const finalMessageDiv = document.getElementById("final-message");
 
 const state = {
   step: "name",
