@@ -1,0 +1,142 @@
+/* Custom terminal styles */
+body {
+  background-color: #000;
+  color: #0f0; /* Bright green text */
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Scanline effect overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Animated scanline */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(15, 255, 15, 0.05) 50%,
+    transparent 100%
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+#app-container {
+  width: 100%;
+  max-width: 800px;
+  min-height: 90vh;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.95);
+  /* Important: Allow vertical scrolling of the log */
+  overflow-y: scroll;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+}
+
+.input-line input {
+  background: none;
+  border: none;
+  color: #fff;
+  outline: none;
+  flex-grow: 1;
+  padding-left: 5px;
+  font-size: 1rem;
+}
+
+.typed-line {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.progress-bar {
+  height: 15px;
+  background-color: #111;
+  border: 1px solid #0f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #0f0;
+  transition: width 0.1s;
+}
+
+/* --- Cursor and Animation Styles --- */
+.blinking-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em; /* Matches line height */
+  background-color: #0f0;
+  margin-left: 4px;
+  position: relative;
+  top: 2px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    background-color: #0f0;
+  }
+  50% {
+    background-color: transparent;
+  }
+}
+
+/* Style for the button */
+.hack-button {
+  background-color: #0f0;
+  color: black;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.1s, box-shadow 0.1s;
+}
+
+.hack-button:hover {
+  background-color: #3f3;
+  box-shadow: 0 0 10px #3f3;
+}
