@@ -27,6 +27,24 @@ const jokes = [
 // --- Utility Functions ---
 
 /**
+ * Scroll helper to reliably scroll the output log to the bottom.
+ * Use `smooth: true` for a smooth animated scroll when appropriate.
+ */
+function scrollToBottom(options = { smooth: false }) {
+  requestAnimationFrame(() => {
+    try {
+      if (options.smooth && typeof outputLog.scrollTo === "function") {
+        outputLog.scrollTo({ top: outputLog.scrollHeight, behavior: "smooth" });
+      } else {
+        outputLog.scrollTop = outputLog.scrollHeight;
+      }
+    } catch (e) {
+      outputLog.scrollTop = outputLog.scrollHeight;
+    }
+  });
+}
+
+/**
  * Simulates typing a line of text into the terminal output with a realistic, randomized delay.
  * @param {string} line The text line to type.
  * @returns {Promise<void>} A promise that resolves when typing is complete.
@@ -42,7 +60,8 @@ function typeWrite(line) {
     cursor.className = "blinking-cursor";
     lineDiv.appendChild(cursor);
 
-    outputLog.scrollTop = outputLog.scrollHeight;
+    // Keep the log scrolled while we type
+    scrollToBottom({ smooth: false });
 
     let i = 0;
     const minDelay = 15; // Minimum delay for fast typing
@@ -80,7 +99,7 @@ function typeWrite(line) {
         }
 
         // Scroll on every character to ensure we follow the typing
-        outputLog.scrollTop = outputLog.scrollHeight;
+        scrollToBottom({ smooth: false });
 
         setTimeout(type, delay);
       } else {
@@ -142,6 +161,9 @@ async function promptUser(question, stateKey) {
       inputDisplay.textContent = `${promptText}${value}`;
       outputLog.appendChild(inputDisplay);
 
+          // Ensure the newly added input is visible
+          scrollToBottom({ smooth: true });
+
       // Add a small space after user input for readability
       const spacer = document.createElement("div");
       spacer.className = "typed-line";
@@ -185,7 +207,7 @@ async function promptUser(question, stateKey) {
     inputArea.appendChild(submitButton);
   }
   inputElement.focus();
-  outputLog.scrollTop = outputLog.scrollHeight;
+  scrollToBottom({ smooth: true });
 }
 
 /**
@@ -237,12 +259,14 @@ async function runBirthdayHack() {
   progressBarFill.style.width = "0%";
   progressBarContainer.appendChild(progressBarFill);
   outputLog.appendChild(progressBarContainer);
-  outputLog.scrollTop = outputLog.scrollHeight;
+  scrollToBottom({ smooth: true });
 
   // Simulate progress
   for (let i = 0; i <= 100; i++) {
     progressBarFill.style.width = `${i}%`;
     await new Promise((r) => setTimeout(r, 20)); // Short delay for visual effect
+    // Keep the progress visible as it updates (periodic immediate scroll)
+    if (i % 10 === 0) scrollToBottom({ smooth: false });
   }
 
   await typeWrite(
@@ -301,7 +325,7 @@ function showFinalMessage() {
   
   // Scroll to bottom and ensure final message is visible
   setTimeout(() => {
-    outputLog.scrollTop = outputLog.scrollHeight;
+    scrollToBottom({ smooth: true });
     finalMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, 100);
 }
@@ -373,7 +397,7 @@ function showHackButton() {
     `;
   // Note: The click listener must be set AFTER the button is added to the DOM
   document.getElementById("hack-btn").onclick = runBirthdayHack;
-  outputLog.scrollTop = outputLog.scrollHeight;
+  scrollToBottom({ smooth: true });
 }
 
 /**

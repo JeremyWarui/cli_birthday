@@ -73,6 +73,17 @@ body::after {
   z-index: 10;
 }
 
+/* Output log - scrollable area inside the app container.
+   Using a dedicated scrollable element prevents the page body from
+   handling scroll, and allows precise auto-scrolling to the latest line. */
+#output-log {
+  max-height: calc(90vh - 240px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   #app-container {

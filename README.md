@@ -1,88 +1,87 @@
-# Birthday Hack Terminal 🎂
+# CLI Birthday — Retro "Hack Terminal" Birthday Greeting
 
-An interactive birthday greeting web app styled as a retro command-line interface with terminal aesthetics.
+A small browser-based interactive birthday experience that looks and feels like a retro command-line "hack" terminal. The app guides the user through typed prompts (name, age, favorite food, hidden talent), runs a playful "hack" sequence with a progress bar, and finishes with a celebratory message and short Tone.js sound effect.
 
-## Features
+**This project is intended to be opened in a web browser (desktop or mobile).**
 
-- 🖥️ Retro terminal interface with CRT scanline effects
-- ⌨️ Realistic typing animation with natural pauses
-- 🎮 Interactive prompts for personalized birthday messages
-- 🎵 Celebratory sound effects using Tone.js
-- 📱 Mobile-responsive design
-- 🎉 Fun age verification "hack" sequence
+**Highlights:**
+- Retro terminal UI and typed output animation
+- Interactive prompts and simple client-side state
+- Small progress-bar "hack" sequence and celebratory sound (Tone.js)
+- Mobile-friendly input handling (includes a numeric-submit button for age)
 
 ## Demo
 
-Try it live: [Your GitHub Pages URL]
+No public demo is deployed for this repository. Run locally (instructions below) to try it in your browser.
 
-## Local Development
+## Quick Start (local)
 
 1. Clone the repository:
-```bash
-git clone https://github.com/JeremyWarui/cli_birthday.git
-cd cli_birthday
+```powershell
+git clone https://github.com/JeremyWarui/cli_birthday.git ; cd cli_birthday
 ```
 
-2. Open `index.html` in your browser or serve it locally:
-```bash
-# Using Python
-python3 -m http.server 8000
+2. Open `index.html` directly in a browser (double-click), or run a simple local server:
+```powershell
+# Using Python (if installed)
+python -m http.server 8000
 
-# Or using Node.js
-npx serve
+# Or with Node (serve package)
+npx serve .
 ```
 
-3. Navigate to `http://localhost:8000`
+3. Open `http://localhost:8000` (when using a server) or view `index.html` locally.
+
+## What it does
+
+- Starts a typed terminal-like sequence and asks for the user's name.
+- Asks for age and compares it to a hard-coded `TARGET_AGE` (this is part of the joke).
+- Collects favorite food and a hidden talent.
+- Presents a playful hack/progress sequence and a final celebratory message; plays a short synth sequence via Tone.js if the browser allows audio.
 
 ## File Structure
 
 ```
 cli_birthday/
-├── index.html      # Main HTML structure
-├── styles.css      # Terminal styling and animations
-├── script.js       # Application logic
+├── index.html      # Main HTML structure (loads Tailwind CDN, Tone.js, styles.css, script.js)
+├── styles.css      # Visual styles and terminal effects
+├── script.js       # Application logic: typing, prompts, hack sequence, Tone.js sound
 └── README.md       # This file
 ```
 
-## GitHub Pages Deployment
+## Configuration & Customization
 
-1. Push your code to GitHub
-2. Go to repository Settings
-3. Navigate to Pages section
-4. Select source branch (usually `main`)
-5. Save and wait for deployment
-6. Your site will be live at `https://jeremywarui.github.io/cli_birthday/`
-
-## Customization
-
-### Change Target Age
-Edit `TARGET_AGE` in `script.js`:
+- Change the joke/forced age by editing `TARGET_AGE` in `script.js`:
 ```javascript
-const TARGET_AGE = 27; // Change to desired age
+const TARGET_AGE = 27; // update as desired
 ```
 
-### Modify Birthday Messages
-Edit the `showFinalMessage()` function in `script.js` to customize the celebratory text.
+- Customize typed output speed by tweaking `minDelay` / `maxDelay` in `typeWrite()` in `script.js`.
 
-### Adjust Typing Speed
-Modify timing in the `typeWrite()` function in `script.js`:
-```javascript
-const minDelay = 15; // Faster
-const maxDelay = 90; // Slower
-```
+- Update the final message text inside `showFinalMessage()` in `script.js` to personalize the message.
 
-## Technologies Used
+## Dependencies
 
-- HTML5
-- CSS3 (with scanline animations)
-- Vanilla JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) (via CDN)
-- [Tone.js](https://tonejs.github.io/) (for sound effects)
+- No build step required. The project uses CDN-hosted libraries in `index.html`:
+	- Tailwind CSS (via CDN)
+	- Tone.js (via CDN)
+
+## Notes & Known Behaviors
+
+- Audio will only play after a user gesture in some browsers; the code attempts to start the Tone.js context when running the celebration sound.
+- The app uses a hard-coded `TARGET_AGE` to create the playful "age correction" behavior — adjust or remove if you prefer.
 
 ## License
 
-MIT License - Feel free to use this for your own birthday surprises!
+This project is licensed under the MIT License — see the `LICENSE` file in the repository root for the full text.
 
-## Credits
+## Author
 
-Created by [Jeremy Warui](https://github.com/JeremyWarui)
+Created by Jeremy Warui — repository: `JeremyWarui/cli_birthday`.
+
+---
+If you'd like, I can also:
+- Add a small `LICENSE` file (MIT) to the repo.
+- Add a screenshot or demo GIF to the README.
+- Add a GitHub Pages deployment guide and default URL placeholder.
+Tell me which you'd prefer and I'll implement it.
