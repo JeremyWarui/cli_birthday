@@ -157,8 +157,22 @@ async function promptUser(question, stateKey) {
     }
   };
 
+  // Handle blur event (when keyboard is dismissed on mobile)
+  inputElement.onblur = function () {
+    // Small delay to allow the submit button to be clicked first
+    setTimeout(() => {
+      // Re-focus unless we're already processing
+      if (inputArea.contains(inputElement)) {
+        inputElement.focus();
+      }
+    }, 100);
+  };
+
   // Button click handler
-  submitButton.onclick = handleSubmit;
+  submitButton.onclick = async function (event) {
+    event.preventDefault();
+    await handleSubmit();
+  };
 
   inputArea.appendChild(promptSpan);
   inputArea.appendChild(inputElement);
