@@ -121,11 +121,14 @@ async function promptUser(question, stateKey) {
   inputElement.placeholder = "Type here...";
   inputElement.autofocus = true;
 
-  // Create a submit button for mobile (especially iOS numeric keyboard)
-  const submitButton = document.createElement("button");
-  submitButton.textContent = "→";
-  submitButton.className = "submit-btn";
-  submitButton.type = "button";
+  // Create a submit button for mobile (especially iOS numeric keyboard) - only for age input
+  let submitButton = null;
+  if (stateKey === "age") {
+    submitButton = document.createElement("button");
+    submitButton.textContent = "→";
+    submitButton.className = "submit-btn";
+    submitButton.type = "button";
+  }
 
   // Function to handle submission
   const handleSubmit = async function () {
@@ -157,26 +160,30 @@ async function promptUser(question, stateKey) {
     }
   };
 
-  // Handle blur event (when keyboard is dismissed on mobile)
-  inputElement.onblur = function () {
-    // Small delay to allow the submit button to be clicked first
-    setTimeout(() => {
-      // Re-focus unless we're already processing
-      if (inputArea.contains(inputElement)) {
-        inputElement.focus();
-      }
-    }, 100);
-  };
+  // Handle blur event (when keyboard is dismissed on mobile) - only for age input
+  if (stateKey === "age") {
+    inputElement.onblur = function () {
+      // Small delay to allow the submit button to be clicked first
+      setTimeout(() => {
+        // Re-focus unless we're already processing
+        if (inputArea.contains(inputElement)) {
+          inputElement.focus();
+        }
+      }, 100);
+    };
 
-  // Button click handler
-  submitButton.onclick = async function (event) {
-    event.preventDefault();
-    await handleSubmit();
-  };
+    // Button click handler
+    submitButton.onclick = async function (event) {
+      event.preventDefault();
+      await handleSubmit();
+    };
+  }
 
   inputArea.appendChild(promptSpan);
   inputArea.appendChild(inputElement);
-  inputArea.appendChild(submitButton);
+  if (submitButton) {
+    inputArea.appendChild(submitButton);
+  }
   inputElement.focus();
   outputLog.scrollTop = outputLog.scrollHeight;
 }
@@ -291,7 +298,12 @@ function showFinalMessage() {
         </ul>
         <p class="mt-8 text-xl font-bold">Today we celebrate **YOU** — loudly, joyfully, unapologetically 🥳</p>
     `;
-  outputLog.scrollTop = outputLog.scrollHeight;
+  
+  // Scroll to bottom and ensure final message is visible
+  setTimeout(() => {
+    outputLog.scrollTop = outputLog.scrollHeight;
+    finalMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, 100);
 }
 
 /**

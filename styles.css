@@ -27,7 +27,7 @@ body::before {
     transparent 2px
   );
   pointer-events: none;
-  z-index: 1000;
+  z-index: 1;
 }
 
 /* Animated scanline */
@@ -46,7 +46,7 @@ body::after {
   );
   animation: scanline 8s linear infinite;
   pointer-events: none;
-  z-index: 999;
+  z-index: 1;
 }
 
 @keyframes scanline {
@@ -64,10 +64,13 @@ body::after {
   min-height: 90vh;
   padding: 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
   background-color: rgba(0, 0, 0, 0.95);
   /* Important: Allow vertical scrolling of the log */
   overflow-y: scroll;
   overflow-x: hidden;
+  position: relative;
+  z-index: 10;
 }
 
 /* Mobile responsive adjustments */
