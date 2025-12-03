@@ -121,9 +121,15 @@ async function promptUser(question, stateKey) {
   inputElement.placeholder = "Type here...";
   inputElement.autofocus = true;
 
-  // Update onkeyup to be async and display the *full* line on enter
-  inputElement.onkeyup = async function (event) {
-    if (event.key === "Enter" && inputElement.value.trim() !== "") {
+  // Create a submit button for mobile (especially iOS numeric keyboard)
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "→";
+  submitButton.className = "submit-btn";
+  submitButton.type = "button";
+
+  // Function to handle submission
+  const handleSubmit = async function () {
+    if (inputElement.value.trim() !== "") {
       const value = inputElement.value.trim();
       state.data[stateKey] = value;
 
@@ -144,8 +150,19 @@ async function promptUser(question, stateKey) {
     }
   };
 
+  // Update onkeyup to be async and display the *full* line on enter
+  inputElement.onkeyup = async function (event) {
+    if (event.key === "Enter") {
+      await handleSubmit();
+    }
+  };
+
+  // Button click handler
+  submitButton.onclick = handleSubmit;
+
   inputArea.appendChild(promptSpan);
   inputArea.appendChild(inputElement);
+  inputArea.appendChild(submitButton);
   inputElement.focus();
   outputLog.scrollTop = outputLog.scrollHeight;
 }

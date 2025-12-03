@@ -67,11 +67,23 @@ body::after {
   background-color: rgba(0, 0, 0, 0.95);
   /* Important: Allow vertical scrolling of the log */
   overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  #app-container {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 0.875rem;
+  }
 }
 
 .input-line {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .input-line input {
@@ -80,13 +92,62 @@ body::after {
   color: #fff;
   outline: none;
   flex-grow: 1;
+  min-width: 150px;
   padding-left: 5px;
   font-size: 1rem;
+}
+
+/* Submit button for mobile */
+.submit-btn {
+  background-color: #0f0;
+  color: #000;
+  border: none;
+  padding: 4px 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.1s;
+}
+
+.submit-btn:hover {
+  background-color: #3f3;
+}
+
+.submit-btn:active {
+  background-color: #0c0;
+}
+
+/* Mobile input adjustments */
+@media (max-width: 640px) {
+  .input-line {
+    gap: 2px;
+  }
+  
+  .input-line input {
+    font-size: 0.875rem;
+    min-width: 120px;
+  }
+  
+  .submit-btn {
+    padding: 6px 14px;
+    font-size: 1.1rem;
+  }
 }
 
 .typed-line {
   white-space: pre-wrap;
   line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Mobile text adjustments */
+@media (max-width: 640px) {
+  .typed-line {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
 }
 
 .progress-bar {
@@ -139,4 +200,40 @@ body::after {
 .hack-button:hover {
   background-color: #3f3;
   box-shadow: 0 0 10px #3f3;
+}
+
+/* Mobile button adjustments */
+@media (max-width: 640px) {
+  .hack-button {
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+
+/* Final message mobile responsiveness */
+#final-message {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 640px) {
+  #final-message {
+    padding: 1rem !important;
+    margin-top: 1.5rem !important;
+    font-size: 0.875rem;
+  }
+  
+  #final-message h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  #final-message p {
+    font-size: 0.875rem !important;
+  }
+  
+  #final-message ul {
+    font-size: 0.875rem !important;
+  }
 }
